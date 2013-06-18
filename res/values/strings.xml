@@ -4,5 +4,13 @@
     <string name="app_name">LIV</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="email">Email:</string>
+    <string name="logo">LIV</string>
+	<string name="password">Password:</string>
+	<string name="login">Login:</string>
+	<string name="register_hint">New to LIV? Register Here</string>
+	<string name="name">Full Name</string>
+	<string name="register">Register</string>
+	<string name="login_hint">Already has an account! Login Here</string>
+	<string name="register_activity_lable">Displaying the Register Screen</string>
 </resources>
