@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.liv.LoginActivity"
+            android:name="com.example.liv.DashboardActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,8 +25,22 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register_activity_lable"></activity>
+            android:label="@string/register_activity_lable">
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/login_activity_lable">
+        </activity>
         <meta-data android:name="com.crashlytics.ApiKey" android:value="b1694bc0b07b7988ea8827238bbe7e3c66fb3395"/>
     </application>
 
 </manifest>
+
+
+
+
+
+
+
+
+

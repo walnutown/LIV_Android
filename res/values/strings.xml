@@ -12,5 +12,8 @@
 	<string name="name">Full Name</string>
 	<string name="register">Register</string>
 	<string name="login_hint">Already has an account! Login Here</string>
-	<string name="register_activity_lable">Displaying the Register Screen</string>
+	<string name="register_activity_lable">Register New Account</string>
+	<string name="login_activity_lable">Login Account</string>
+	<string name="welcome">Welcome!</string>
+	<string name="logout">Log me out</string>
 </resources>

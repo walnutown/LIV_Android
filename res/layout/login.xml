@@ -62,6 +62,7 @@
             <!-- singleLine: Constrains the text to a single horizontally scrolling line instead of letting it wrap onto multiple lines, 
             and advances focus instead of inserting a newline when you press the enter key.  -->
             <EditText
+                android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dip"
@@ -75,6 +76,7 @@
                 android:textColor="#372c24"
                 android:text="@string/password"/>
             <EditText
+                android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                	android:layout_marginBottom="20dip"
@@ -99,6 +101,12 @@
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textColor="#0b84aa"/>
+            <!-- Error Message -->
+            <TextView
+                android:id="@+id/login_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"/>
         </LinearLayout>
         
         <!-- Login Form Ends -->

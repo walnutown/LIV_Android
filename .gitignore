@@ -1,6 +1,13 @@
+*.class
 
 res/drawable-ldpi/.DS_Store
 
 res/drawable-hdpi/.DS_Store
 
 res/drawable-mdpi/.DS_Store
+
+*.class
+
+*.ap_
+
+.DS_Store
