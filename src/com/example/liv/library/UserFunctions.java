@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 public class UserFunctions {
 	private JSONParser jsonParser;
@@ -35,8 +36,9 @@ public class UserFunctions {
 		params.add(new BasicNameValuePair("tag", login_tag));
 		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("password", password));
+		Log.d("Debug", params.toString());
 		JSONObject json = jsonParser.getJSONFromUrl(loginURL, params);
-		// Log.e("JSON", json.toString());
+		//Log.e("JSON", json.toString());
 		return json;
 	}
 	

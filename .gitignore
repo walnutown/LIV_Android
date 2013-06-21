@@ -11,3 +11,5 @@ res/drawable-mdpi/.DS_Store
 *.ap_
 
 .DS_Store
+
+*.ap_
