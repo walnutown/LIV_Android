@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -38,14 +39,20 @@ public class JSONParser {
 
 		urlStr = url;
 		postParams = params;
-		new makeRequest().execute();
-		// return JSON String
+		try {
+			jObj = new makeRequest().execute().get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		Log.d("JSON Object", jObj.toString());
 		return jObj;
 	}
 
-	protected class makeRequest extends AsyncTask<Context, Void, Void> {
+	protected class makeRequest extends AsyncTask<Context, Void, JSONObject> {
 		@Override
-		protected Void doInBackground(Context... params) {
+		protected JSONObject doInBackground(Context... params) {
 			// Making HTTP POST request with HttpClient
 			try {
 				Log.d("Debug", "Execute makeRequest().");
@@ -54,46 +61,35 @@ public class JSONParser {
 				Log.d("URL", urlStr);
 				Log.d("postParams", postParams.toString());
 				httpPost.setEntity(new UrlEncodedFormEntity(postParams));
-				Log.d("Debug", "mark 1");
+				// Log.d("Debug", "mark 1");
 				HttpResponse httpResponse = httpClient.execute(httpPost);
-				Log.d("Debug", "mark 2");
+				// Log.d("Debug", "mark 2");
 				if (httpResponse != null) {
-					Log.d("Debug", "httpResponse: " + httpResponse.toString());
 					HttpEntity httpEntity = httpResponse.getEntity();
 					is = httpEntity.getContent();
 				}
-				Log.d("is", is.toString());
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
-				Log.d("Debug", "UnsupportedEncodeException");
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.d("Debug", "ClientException");
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.d("Debug", "IOException");
 			}
 
 			// read the POST data
-			Log.d("Debug", "Read Post data 1");
+			Log.d("Debug", "Read the Post data");
 			try {
 				if (is != null) {
 					BufferedReader reader = new BufferedReader(
 							new InputStreamReader(is, "UTF-8"), 8);
-					Log.d("Debug", "Read Post data 2");
 					StringBuilder sb = new StringBuilder();
 					String line = null;
 					if (reader != null) {
-						Log.d("Debug", "reader: " + reader.toString());
 						while ((line = reader.readLine()) != null) {
-							Log.d("Debug", "line " + line);
 							sb.append(line + "\n");
 						}
-						Log.d("Debug", "sb: " + sb.toString());
 					}
-					Log.d("Debug", "Read Post data 3");
 					is.close();
-					Log.d("Debug", "Read Post data 4 ");
 					json = sb.toString();
 				}
 			} catch (Exception e) {
@@ -102,14 +98,16 @@ public class JSONParser {
 			}
 
 			// try parse the string to a JSON object
+			JSONObject json_obj = null;
 			try {
+				Log.d("JSON query string", json);
 				if (json != "") {
-					jObj = new JSONObject(json);
+					json_obj = new JSONObject(json);
 				}
 			} catch (JSONException e) {
 				Log.e("JSON Parser", "Error parsing data: " + e.toString());
 			}
-			return null;
+			return json_obj;
 		}
 	}
 

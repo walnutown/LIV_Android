@@ -5,15 +5,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.example.liv.library.DatabaseHandler;
 import com.example.liv.library.UserFunctions;
 
@@ -24,6 +25,9 @@ public class LoginActivity extends Activity {
 	EditText inputEmail;
 	EditText inputPassword;
 	TextView txtErrorMsg;
+	Dialog dialog;
+	Button btnLoginError;
+	
 
 	// JSON Response node names
 	private static String KEY_SUCCESS = "success";
@@ -57,39 +61,35 @@ public class LoginActivity extends Activity {
 				String password = inputPassword.getText().toString();
 				UserFunctions userFunction = new UserFunctions();
 				JSONObject json = userFunction.loginUser(email, password);
-
 				// check for login response
 				try {
 					if (json.getString(KEY_SUCCESS) != null) {
 						txtErrorMsg.setText("");
 						String res = json.getString(KEY_SUCCESS);
 						if (Integer.parseInt(res) == 1) {
-							// user successfully logged in
+							Log.d("Debug", "user successfully logged in");
 							// Store user details in SQLite Database
 							DatabaseHandler db = new DatabaseHandler(
 									getApplicationContext());
 							JSONObject json_user = json.getJSONObject("user");
-
-							// Clear all previous data in database
+							Log.d("Debug", "Clear all previous data in database");
 							userFunction.logoutUser(getApplicationContext());
 							db.addUser(json_user.getString(KEY_NAME),
 									json_user.getString(KEY_EMAIL),
-									json_user.getString(KEY_UID),
+									json.getString(KEY_UID),
 									json_user.getString(KEY_CREATED_AT));
-
-							// Launch Dashboard Screen
+							Log.d("Debug", "Launch Dashboard Screen");
 							Intent dashboard = new Intent(
 									getApplicationContext(),
 									DashboardActivity.class);
 							// Close all views before launching Dashboard
 							dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 							startActivity(dashboard);
-
 							// Close Login Screen
 							finish();
 						} else {
 							// Error in Login
-							txtErrorMsg.setText("Incorrect username/password");
+							loginError_handler();
 						}
 					}
 				} catch (JSONException e) {
@@ -97,26 +97,44 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
-
 		// Listening to register new account link
 		txtRegister.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// Switching to Register screen
 				Intent register = new Intent(getApplicationContext(),
 						RegisterActivity.class);
 				startActivity(register);
-
 			}
 		});
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
+	
+	/*
+	 * Create Dialog to handle the Login Error
+	 */
+	public void loginError_handler(){
+		dialog = new Dialog(this);
+		dialog.setTitle("Login Error");
+		dialog.setContentView(R.layout.login_error);
+		dialog.show();
+		btnLoginError = (Button) dialog.findViewById(R.id.btnDialog_loginError);
+		btnLoginError.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				inputEmail.requestFocus();
+			}
+		});				
+		//txtErrorMsg.setText("Invalid username/password.");
+	}
+	
+	
+	
 }

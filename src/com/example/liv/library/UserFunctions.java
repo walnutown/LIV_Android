@@ -31,14 +31,12 @@ public class UserFunctions {
 	 * function: make login request
 	 */
 	public JSONObject loginUser(String email, String password){
-		// BuiNameValuePairers
+		// Build NameValuePairers
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("tag", login_tag));
 		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("password", password));
-		Log.d("Debug", params.toString());
 		JSONObject json = jsonParser.getJSONFromUrl(loginURL, params);
-		//Log.e("JSON", json.toString());
 		return json;
 	}
 	
@@ -53,7 +51,6 @@ public class UserFunctions {
 		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("password", password));
 		JSONObject json = jsonParser.getJSONFromUrl(registerURL, params);
-		// Log.e("JSON", json.toString());
 		return json;	
 	}
 	

@@ -7,7 +7,7 @@
     <string name="email">Email:</string>
     <string name="logo">LIV</string>
 	<string name="password">Password:</string>
-	<string name="login">Login:</string>
+	<string name="login">Login</string>
 	<string name="register_hint">New to LIV? Register Here</string>
 	<string name="name">Full Name</string>
 	<string name="register">Register</string>
@@ -16,4 +16,7 @@
 	<string name="login_activity_lable">Login Account</string>
 	<string name="welcome">Welcome!</string>
 	<string name="logout">Log me out</string>
+	<string name="ok">OK</string>
+	<string name="loginError">Invalid username/password</string>
+	<string name="registerError">Error in Registration</string>
 </resources>

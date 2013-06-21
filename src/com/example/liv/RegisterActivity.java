@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,10 @@ public class RegisterActivity extends Activity {
 	EditText inputEmail;
 	EditText inputName;
 	EditText inputPassword;
-	TextView txtErrorMsg;
+	
+	Dialog dialog;
+	Button btnRegisterError;
+	TextView txtRegisterError;
 
 	// JSON Response node names
 	private static String KEY_SUCCESS = "success";
@@ -47,8 +51,6 @@ public class RegisterActivity extends Activity {
 		inputName = (EditText) findViewById(R.id.inputName);
 		inputEmail = (EditText) findViewById(R.id.inputEmail);
 		inputPassword = (EditText) findViewById(R.id.inputPassword);
-		txtErrorMsg = (TextView) findViewById(R.id.login_error);
-
 		// Register button Click Event
 		btnRegister.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -62,7 +64,6 @@ public class RegisterActivity extends Activity {
 				// check for register response
 				try {
 					if (json.getString(KEY_SUCCESS) != null) {
-						txtErrorMsg.setText("");
 						String res = json.getString(KEY_SUCCESS);
 						if (Integer.parseInt(res) == 1) {
 							// user successfully registered
@@ -74,7 +75,7 @@ public class RegisterActivity extends Activity {
 							userFunction.logoutUser(getApplicationContext());
 							db.addUser(json_user.getString(KEY_NAME),
 									json_user.getString(KEY_EMAIL),
-									json_user.getString(KEY_UID),
+									json.getString(KEY_UID),
 									json_user.getString(KEY_CREATED_AT));
 							// Launch Dashboard Screen
 							Intent dashboard = new Intent(
@@ -86,8 +87,8 @@ public class RegisterActivity extends Activity {
 							// Close Registration Screen
 							finish();
 						} else {
-							// Error in Login
-							txtErrorMsg.setText("Error occured in registration");
+							// Error in Registration
+							registerError_handler(json.getString(KEY_ERROR_MSG));
 						}
 					}
 				} catch (JSONException e) {
@@ -95,10 +96,8 @@ public class RegisterActivity extends Activity {
 				}
 			}
 		});
-
 		// Listening to login link
 		txtRegister.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				Intent login = new Intent(getApplicationContext(), LoginActivity.class);
@@ -108,4 +107,27 @@ public class RegisterActivity extends Activity {
 			}
 		});
 	}
+	
+	
+	/*
+	 * Dialog to handle the Register Error
+	 */
+	public void registerError_handler(String error_msg){
+		dialog = new Dialog(this);
+		dialog.setTitle("Registration Error");
+		dialog.setContentView(R.layout.register_error);
+		dialog.show();
+		btnRegisterError = (Button) dialog.findViewById(R.id.btnDialog_registerError);
+		txtRegisterError = (TextView) dialog.findViewById(R.id.txtDialog_registerError);
+		txtRegisterError.setText(error_msg);
+		btnRegisterError.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				inputName.requestFocus();
+			}
+		});	
+	}
+	
+	
 }

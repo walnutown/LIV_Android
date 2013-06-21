@@ -13,3 +13,7 @@ res/drawable-mdpi/.DS_Store
 .DS_Store
 
 *.ap_
+
+bin/LIV.apk
+
+*.dex
