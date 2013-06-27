@@ -17,3 +17,7 @@ res/drawable-mdpi/.DS_Store
 bin/LIV.apk
 
 *.dex
+
+res/values/com_crashlytics_export_strings.xml
+
+gen/com/example/liv/R.java

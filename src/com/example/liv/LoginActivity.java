@@ -24,10 +24,8 @@ public class LoginActivity extends Activity {
 	TextView txtRegister;
 	EditText inputEmail;
 	EditText inputPassword;
-	TextView txtErrorMsg;
 	Dialog dialog;
-	Button btnLoginError;
-	
+	Button btnLoginError;	
 
 	// JSON Response node names
 	private static String KEY_SUCCESS = "success";
@@ -50,8 +48,6 @@ public class LoginActivity extends Activity {
 		txtRegister = (TextView) findViewById(R.id.link_to_register);
 		inputEmail = (EditText) findViewById(R.id.inputEmail);
 		inputPassword = (EditText) findViewById(R.id.inputPassword);
-		txtErrorMsg = (TextView) findViewById(R.id.login_error);
-
 		// Login button Click Event
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -64,7 +60,6 @@ public class LoginActivity extends Activity {
 				// check for login response
 				try {
 					if (json.getString(KEY_SUCCESS) != null) {
-						txtErrorMsg.setText("");
 						String res = json.getString(KEY_SUCCESS);
 						if (Integer.parseInt(res) == 1) {
 							Log.d("Debug", "user successfully logged in");
@@ -132,7 +127,6 @@ public class LoginActivity extends Activity {
 				inputEmail.requestFocus();
 			}
 		});				
-		//txtErrorMsg.setText("Invalid username/password.");
 	}
 	
 	
