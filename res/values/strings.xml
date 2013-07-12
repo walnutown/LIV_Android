@@ -19,4 +19,6 @@
 	<string name="ok">OK</string>
 	<string name="loginError">Invalid username/password</string>
 	<string name="registerError">Error in Registration</string>
+	<string name="title1">Jogging</string>
+	<string name="desc1">$200, Los Angeles</string>
 </resources>

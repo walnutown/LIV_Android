@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.VideoView;
@@ -13,7 +15,8 @@ import com.example.liv.library.UserFunctions;
 public class DashboardActivity extends Activity {
 	UserFunctions userFunctions;
 	Button btnLogout;
-	VideoView vv;
+	VideoView vv1;
+	VideoView vv2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +28,32 @@ public class DashboardActivity extends Activity {
 			// user already logged in, display welcome
 			setContentView(R.layout.dashboard);
 			btnLogout = (Button) findViewById(R.id.btnLogout);
-			vv = (VideoView) findViewById(R.id.video);
-			String filename = "https://vines.s3.amazonaws.com/videos/08C49094-DFB4-46DF-8110-EEEC7D4D6115-1133-000000B8AD9BE72C_1.0.1.mp4?versionId=TQGtC5O7G7H34TleFA2LF0Er9tI8VZUe";
-			vv.setVideoURI(Uri.parse(filename));
-			vv.start();
+			vv1 = (VideoView) findViewById(R.id.video1);
+			String filename1 = "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te";
+			vv1.setVideoURI(Uri.parse(filename1));
+			vv1.start();
+			vv1.setOnTouchListener(new View.OnTouchListener() {
+				
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (vv1.isPlaying()){
+						vv1.pause();
+						Log.d("Video", "Pause");	
+					}
+					else{
+						vv1.start();
+						Log.d("Video", "Resume");
+					}
+					
+					return true;
+				}
+			});
+			
+			vv2 = (VideoView) findViewById(R.id.video2);
+			String filename2 = "https://v.cdn.vine.co/r/videos/37B926EBC4965748550245969920_17915f6d3d3.3_cHR4.8r6RDQXA_MwZRSvakvKuMdIV1XiHeI4Lq6_spR0SMqDo5zS5vTCuYI7BM7T.mp4?versionId=GofccS921hBgrP.f36TQpZpBJY_JLhgj";
+			vv2.setVideoURI(Uri.parse(filename2));
+			vv2.start();
+			
 			
 			btnLogout.setOnClickListener(new View.OnClickListener() {
 
