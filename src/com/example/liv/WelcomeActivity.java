@@ -30,6 +30,7 @@ public class WelcomeActivity extends Activity{
 			public void onClick(View arg0) {
 				Intent toLoginAct = new Intent(getApplicationContext(), LoginActivity_new.class);
 				startActivity(toLoginAct);
+				
 			}
 		});
 		
@@ -42,6 +43,4 @@ public class WelcomeActivity extends Activity{
 		
 		
 	}
-	
-
 }

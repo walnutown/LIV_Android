@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dip" >
-
             <Button
                 android:id="@+id/btn_fb"
                 style="@style/LivButtonBlue"
@@ -25,7 +24,6 @@
                 android:paddingRight="-10dp"
                 android:text="Login with Facebook"
                 android:textSize="23dip" />
-
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
@@ -45,18 +43,6 @@
             android:text="or"
             android:textColor="#818181"
             android:textSize="20dip" />
-
-        <EditText
-            android:id="@+id/edit_name"
-            style="@style/LivEdit"
-            android:layout_width="280dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dip"
-            android:gravity="center_horizontal"
-            android:hint="Full Name"
-            android:inputType="textPersonName"
-            android:textSize="25dip" />
 
         <EditText
             android:id="@+id/edit_email"
@@ -82,34 +68,6 @@
             android:inputType="textPassword"
             android:textSize="25dip" />
 
-        <RelativeLayout
-            android:layout_width="280dip"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dip" >
-
-            <ToggleButton
-                android:id="@+id/btn_male"
-                style="@style/LivButtonToggle"
-                android:layout_width="130dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:checked="true"
-                android:textOff="Male"
-                android:textOn="Male"
-                android:textSize="23dip" />
-
-            <ToggleButton
-                android:id="@+id/btn_female"
-                style="@style/LivButtonToggle"
-                android:layout_width="130dip"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center_horizontal"
-                android:textOff="Female"
-                android:textOn="Female"
-                android:textSize="23dip" />
-        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_sign"
@@ -118,7 +76,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dip"
-            android:text="Sign Up"
+            android:text="Sign In"
+            android:textSize="23dip" />
+        
+        <Button
+            android:id="@+id/btn_forget_pswd"
+            style="@style/LivButtonGrey"
+            android:layout_width="280dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="90dip"
+            android:text="Forget your passwrod?"
             android:textSize="23dip" />
     </LinearLayout>
 

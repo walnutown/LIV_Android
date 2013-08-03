@@ -57,8 +57,16 @@
          <activity
             android:name=".SignUpActivity"
             android:icon="@drawable/back_arrow_icon"
-            android:label="Back" 
-            android:theme="@style/LivTheme.ActionBar.Back"
+            android:label="back" 
+            android:theme="@style/LivTheme.ActionBar.SignIn"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+         <activity
+            android:name=".SignInActivity"
+            android:logo="@drawable/back_arrow_icon"
+            android:label="back" 
+            android:theme="@style/LivTheme.ActionBar.SignUp"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>

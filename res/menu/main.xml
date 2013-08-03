@@ -2,8 +2,9 @@
 
     <item
         android:id="@+id/sign_in"
+        android:icon="@drawable/forward_arrow_icon"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="Sign In"
-        android:icon="@drawable/forward_arrow_icon"/>
+        android:title="Sign In"/>
+
 </menu>
