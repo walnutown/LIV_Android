@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.example.liv.library.DatabaseHandler;
 import com.example.liv.library.UserFunctions;
 

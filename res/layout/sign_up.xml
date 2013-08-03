@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffffff"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dip" >
+
+            <Button
+                android:id="@+id/btn_fb"
+                style="@style/LivButtonBlue"
+                android:layout_width="280dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="40dp"
+                android:paddingRight="-10dp"
+                android:text="Login with Facebook"
+                android:textSize="23dip" />
+
+            <ImageView
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:scaleType="fitCenter"
+                android:scaleX="0.9"
+                android:scaleY="1"
+                android:src="@drawable/fb_thumb" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txt_or"
+            android:layout_width="280dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dip"
+            android:gravity="center_horizontal"
+            android:text="or"
+            android:textColor="#818181"
+            android:textSize="20dip" />
+
+        <EditText
+            android:id="@+id/edit_name"
+            style="@style/LivEdit"
+            android:layout_width="280dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip"
+            android:gravity="center_horizontal"
+            android:hint="Full Name"
+            android:inputType="textPersonName"
+            android:textSize="25dip" />
+
+        <EditText
+            android:id="@+id/edit_email"
+            style="@style/LivEdit"
+            android:layout_width="280dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip"
+            android:gravity="center_horizontal"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textSize="25dip" />
+
+        <EditText
+            android:id="@+id/edit_passwd"
+            style="@style/LivEdit"
+            android:layout_width="280dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip"
+            android:gravity="center_horizontal"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textSize="25dip" />
+
+        <RelativeLayout
+            android:layout_width="280dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip" >
+
+            <Button
+                android:id="@+id/btn_male"
+                style="@style/LivButton"
+                android:layout_width="130dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Male"
+                android:textSize="23dip" />
+
+            <Button
+                android:id="@+id/btn_female"
+                style="@style/LivButtonGrey"
+                android:layout_width="130dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_horizontal"
+                android:text="Female"
+                android:textSize="23dip" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_sign"
+            style="@style/LivButton"
+            android:layout_width="280dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dip"
+            android:text="Sign Up"
+            android:textSize="23dip" />
+    </LinearLayout>
+
+</ScrollView>

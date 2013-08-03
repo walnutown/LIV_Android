@@ -20,5 +20,5 @@
 	<string name="loginError">Invalid username/password</string>
 	<string name="registerError">Error in Registration</string>
 	<string name="title1">Jogging</string>
-	<string name="desc1">$200, Los Angeles</string>
+	<string name="desc1"> When I was setting up my first SQL database test table with phpMyAdmin on my website I was confronted with making choices I dont remember encountering in the tutorials One choice in particular about collation stumped me The default collation in phpMyAdmin for tables is automatically latin1_swedish_c and I accepted it since I didnt have a clue about what might be a better choice and I looked collation up at dev mysql com but it didnt help me understand what I should choose I had hoped Id see something like English as an option but no such luck or I missed it if it was there </string>
 </resources>

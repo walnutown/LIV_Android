@@ -7,40 +7,63 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" 
+        >
         <activity
             android:name="com.example.liv.DashboardActivity"
             android:label="@string/app_name" >
+
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register_activity_lable">
+            android:label="@string/register_activity_lable" >
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/login_activity_lable">
+            android:label="@string/login_activity_lable" >
         </activity>
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="b1694bc0b07b7988ea8827238bbe7e3c66fb3395"/>
+        <activity
+            android:name=".WelcomeActivity"
+            android:label=""
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+         <activity
+            android:name=".LoginActivity_new"
+            android:label="" 
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+         <activity
+            android:name=".SignUpActivity"
+            android:label="" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="b1694bc0b07b7988ea8827238bbe7e3c66fb3395" />
     </application>
 
 </manifest>
-
-
-
-
-
-
-
-
-
