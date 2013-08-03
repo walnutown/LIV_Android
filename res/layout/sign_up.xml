@@ -86,25 +86,28 @@
             android:layout_width="280dip"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dip" >
+            android:layout_marginTop="30dip" >
 
-            <Button
+            <ToggleButton
                 android:id="@+id/btn_male"
-                style="@style/LivButton"
+                style="@style/LivButtonToggle"
                 android:layout_width="130dip"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Male"
+                android:checked="true"
+                android:textOff="Male"
+                android:textOn="Male"
                 android:textSize="23dip" />
 
-            <Button
+            <ToggleButton
                 android:id="@+id/btn_female"
-                style="@style/LivButtonGrey"
+                style="@style/LivButtonToggle"
                 android:layout_width="130dip"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
-                android:text="Female"
+                android:textOff="Female"
+                android:textOn="Female"
                 android:textSize="23dip" />
         </RelativeLayout>
 
@@ -114,7 +117,7 @@
             android:layout_width="280dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="30dip"
             android:text="Sign Up"
             android:textSize="23dip" />
     </LinearLayout>
