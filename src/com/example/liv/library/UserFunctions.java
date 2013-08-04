@@ -7,8 +7,16 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Point;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class UserFunctions {
 	private JSONParser jsonParser;
@@ -73,6 +81,48 @@ public class UserFunctions {
 		DatabaseHandler db = new DatabaseHandler(context);
 		db.resetTables();
 		return true;
+	}
+	
+	/*
+	 * convert dp to px
+	 */
+	public static int dpToPx(int dp, Context ctx) {
+		Resources r = ctx.getResources();
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+	}
+	
+	public static int percentToPx(int p, Activity act){
+		Display display = act.getWindowManager().getDefaultDisplay(); 
+		Point size = new Point();
+		display.getSize(size);
+		return size.x * p/100;
+	}
+
+	/*
+	 * Disable the touch events for all views
+	 */
+	public static void enableViewGroup(ViewGroup viewGroup, boolean enabled) {
+		int childCount = viewGroup.getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			View view = viewGroup.getChildAt(i);
+			if (view.isFocusable()) {
+				view.setEnabled(enabled);
+			}
+			if (view instanceof ViewGroup) {
+				enableViewGroup((ViewGroup) view, enabled);
+			} else if (view instanceof ListView) {
+				if (view.isFocusable()) {
+					view.setEnabled(enabled);
+					ListView listView = (ListView) view;
+					int listChildCount = listView.getChildCount();
+					for (int j = 0; j < listChildCount; j++) {
+						if (view.isFocusable()) {
+							listView.getChildAt(j).setEnabled(false);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 

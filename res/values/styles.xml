@@ -29,8 +29,7 @@
         <item name="android:displayOptions">showHome|useLogo|showCustom</item>
         <item name="android:customNavigationLayout">@layout/actionbar_signin</item>
         <item name="android:layout_marginLeft">-5dp</item>
-        <item name="android:layout_marginRight">-5dp</item>
-        
+        <item name="android:layout_marginRight">-5dp</item>     
     </style>
 
     <style name="LivActionBarTitle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
@@ -49,8 +48,21 @@
         <item name="android:displayOptions">showHome|useLogo|showCustom</item>
         <item name="android:customNavigationLayout">@layout/actionbar_signup</item>
         <item name="android:layout_marginLeft">-5dp</item>
-        <item name="android:layout_marginRight">-5dp</item>
-        
+        <item name="android:layout_marginRight">-5dp</item>     
+    </style>
+    
+    <!-- set base ActionBar style -->
+     <style name="LivTheme.ActionBar.Base" parent="AppBaseTheme">
+        <item name="android:actionBarStyle">@style/LivActionbar.Base</item>
+        <item name="android:actionMenuTextColor">#85449a</item>
+    </style>
+    <style name="LivActionbar.Base" parent="android:style/Widget.ActionBar">
+        <item name="android:background">@drawable/liv_actionbar</item>
+        <item name="android:titleTextStyle">@style/LivActionBarTitle</item>
+        <item name="android:displayOptions">showHome|useLogo|showCustom</item>
+        <item name="android:customNavigationLayout">@layout/actionbar_base</item>
+        <item name="android:layout_marginLeft">-5dp</item>
+        <item name="android:layout_marginRight">-5dp</item>    
     </style>
     
     
@@ -117,6 +129,15 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    
+     <style name="LivImageButton" parent="android:style/Widget.ImageButton">
+        <item name="android:background">@drawable/liv_button_image</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">17sp</item>

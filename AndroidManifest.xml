@@ -49,7 +49,6 @@
         </activity>
          <activity
             android:name=".LoginActivity_new"
-            android:label="" 
             android:theme="@android:style/Theme.Holo.Light.NoActionBar"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize">
@@ -67,6 +66,13 @@
             android:logo="@drawable/back_arrow_icon"
             android:label="back" 
             android:theme="@style/LivTheme.ActionBar.SignUp"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+         <activity
+            android:name=".HomeActivity"
+            android:label="" 
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
