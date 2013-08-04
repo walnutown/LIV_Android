@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:gravity="center_horizontal">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,5 +36,19 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#C1C1C1" />
+    
+     <TextView
+        android:id="@+id/caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VideoList" 
+        android:layout_centerHorizontal="true"
+        />
+    <ListView 
+        android:id="@+id/videoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/caption">
+    </ListView>
 
 </LinearLayout>
