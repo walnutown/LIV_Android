@@ -89,16 +89,29 @@ public class HomeActivity extends Activity {
 	private HashMap<Integer, DealView> dvMap = new HashMap<Integer, DealView>();
 
 	
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);	
-		init();
-		
-		
+		init();	
 	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		//finish();
+		clearMP();
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		new PositionCheck().execute();
+	}
+
+
 
 	public void toggleSlide() {
 		if (!menuShown) {
@@ -307,6 +320,7 @@ public class HomeActivity extends Activity {
 		for (Map.Entry<Integer, DealView> entry : dvMap.entrySet()) {
 			Integer pos = entry.getKey();
 			DealView dv = entry.getValue();
+			//Log.d("clearMP","index: " + pos );
 			if (dv.isMPCreated()) {
 				dv.stopPlayBack();
 				Log.d("clearMP", "clear " + pos);
@@ -337,9 +351,9 @@ public class HomeActivity extends Activity {
 				if (firstPos == lastPos) {
 					if (!dvFirst.isMPCreated()) {
 						clearMP();
-						dvFirst.start();
-						dvMap.put(firstPos, dvFirst);
+						dvFirst.start();		
 					}
+					dvMap.put(firstPos, dvFirst);
 				} else {
 
 					dealRowLast = videoList.getChildAt(1);
