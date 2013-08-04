@@ -97,70 +97,7 @@ public class HomeActivity extends Activity {
 		setContentView(R.layout.home);	
 		init();
 		
-		videoList = (ListView) findViewById(R.id.videoList);
-		videoPaths
-				.add(0, "https://v.cdn.vine.co/r/videos/37B926EBC4965748550245969920_17915f6d3d3.3_cHR4.8r6RDQXA_MwZRSvakvKuMdIV1XiHeI4Lq6_spR0SMqDo5zS5vTCuYI7BM7T.mp4?versionId=GofccS921hBgrP.f36TQpZpBJY_JLhgj");
-		videoPaths
-				.add(1, "https://v.cdn.vine.co/r/videos/630824DB37966941739384557568_1736066dbf6.3_pyjAJU.RqG7gEUty5Ado_sk6NROgDltxqgYRLgrPD7xKsEk.PUBPKHObWXSPtrQf.mp4?versionId=_lPIR99ivITsJZynfT8EABJAV8aXz551");
-		videoPaths
-				.add(2, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
-		videoPaths
-				.add(3, "https://v.cdn.vine.co/r/videos/6D43C68100964692366743240704_1acd90e551a.3_K2q5qaEtoRvg0K9.KX4BPK_rpIUweynZCIEAQPThYXWwW6w1tI5EgwYdqNk_0mDu.mp4?versionId=H6QOz2P2y_61q2axSQSkskdBXhS.GHiE");
-		videoPaths
-				.add(4, "https://v.cdn.vine.co/r/videos/FA01205D-0ABE-4AC9-8812-CFC1D75E544B-6231-0000031EBD2EE420_197450298e5.1.3.mp4?versionId=z7.LcYvqtxmLeLXsUNT60Iqv8ebtNU3X");
-		videoPaths
-				.add(5, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
-		videoPaths
-				.add(6, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
-		videoPaths
-				.add(7, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
-		videoPaths
-				.add(8, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
-		videoPaths
-				.add(9, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
 		
-		for (int i = 0; i < videoPaths.size(); i++) {
-			DealDesc dvi = new DealDesc();
-			dvi.videoPath = videoPaths.get(i);
-			if (i == 0){dvi.thumbPath = R.drawable.v0;}
-			if (i == 1){dvi.thumbPath = R.drawable.v1;}
-			if (i == 2){dvi.thumbPath = R.drawable.v2;}
-			if (i == 3){dvi.thumbPath = R.drawable.v3;}
-			if (i == 4){dvi.thumbPath = R.drawable.v4;}
-			if (i == 5){dvi.thumbPath = R.drawable.v5;}
-			if (i == 6){dvi.thumbPath = R.drawable.v6;}
-			if (i == 7){dvi.thumbPath = R.drawable.v7;}
-			if (i == 8){dvi.thumbPath = R.drawable.v8;}
-			if (i == 9){dvi.thumbPath = R.drawable.v9;}
-			dvi.title = "Video " + i;
-			dvi.desc = "fairly generic and I know there might not be an 100% answer to it. I'm building an ASP .NET web solution that will include a lot of pictures and hopefully a fair amount of traffic."
-					+ " I do really want to achieve performance. OMMENT: Thanks for many good answers. I will go for a file based solution even if I like the idea of having a 100% database driven solution. It "
-					+ "seems that there are today good solutions to do what I want with databases etc but I have a few reasons for not doing it."
-					+ "When I was setting up my first SQL database test table with phpMyAdmin on my website, I was confronted with making choices I "
-					+ "don't remember encountering in the tutorials. One choice in particular about collation stumped me.The default collation in phpMyAdmin"
-					+ " for tables is automatically latin1_swedish_ci, and I accepted it since I didn't have a clue about what might be a better choice (and I "
-					+ "looked collation up at dev.mysql.com, but it didn't help me understand what I should choose). I had hoped I'd see something like English "
-					+ "as an option, but no such luck (or I missed it if it was there).";
-			dealRows.add(dvi);
-		}
-
-		// Log.d("Debug",
-		// "Set the adapter of the ListView object to be a new instance of VideoGalleryAdapter");
-		videoList.setAdapter(new VideoListAdapter(this, dealRows));
-		videoList.setFriction((float) (ViewConfiguration.getScrollFriction() + SCROLL_FRICTION_OFFSET));
-		videoList.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// is being scrolled
-			}
-
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				// has been scrolled
-				new PositionCheck().execute();
-			}
-		});
 	}
 
 	public void toggleSlide() {
@@ -231,7 +168,6 @@ public class HomeActivity extends Activity {
 			}
 		});
 		UserFunctions.enableViewGroup(host, false);
-
 		slidingMenu.startAnimation(slideRightMenu);
 		dropShadow.startAnimation(slideRightHost);
 
@@ -295,18 +231,76 @@ public class HomeActivity extends Activity {
 			md.icon = R.drawable.ic_launcher;
 			menuItems.add(md);
 		}
-
+		
+		initDealList();	
 	}
 	
-//	public int checkScrollDirection(int prevPos, int currPos) {
-//		if (prevPos > currPos) {
-//			return SCROLL_UP;
-//		} else if (prevPos == currPos) {
-//			return NO_SCROLL;
-//		} else {
-//			return SCROLL_DOWN;
-//		}
-//	}
+	public void initDealList(){
+		videoList = (ListView) findViewById(R.id.deal_list);
+		videoPaths
+				.add(0, "https://v.cdn.vine.co/r/videos/37B926EBC4965748550245969920_17915f6d3d3.3_cHR4.8r6RDQXA_MwZRSvakvKuMdIV1XiHeI4Lq6_spR0SMqDo5zS5vTCuYI7BM7T.mp4?versionId=GofccS921hBgrP.f36TQpZpBJY_JLhgj");
+		videoPaths
+				.add(1, "https://v.cdn.vine.co/r/videos/630824DB37966941739384557568_1736066dbf6.3_pyjAJU.RqG7gEUty5Ado_sk6NROgDltxqgYRLgrPD7xKsEk.PUBPKHObWXSPtrQf.mp4?versionId=_lPIR99ivITsJZynfT8EABJAV8aXz551");
+		videoPaths
+				.add(2, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+		videoPaths
+				.add(3, "https://v.cdn.vine.co/r/videos/6D43C68100964692366743240704_1acd90e551a.3_K2q5qaEtoRvg0K9.KX4BPK_rpIUweynZCIEAQPThYXWwW6w1tI5EgwYdqNk_0mDu.mp4?versionId=H6QOz2P2y_61q2axSQSkskdBXhS.GHiE");
+		videoPaths
+				.add(4, "https://v.cdn.vine.co/r/videos/FA01205D-0ABE-4AC9-8812-CFC1D75E544B-6231-0000031EBD2EE420_197450298e5.1.3.mp4?versionId=z7.LcYvqtxmLeLXsUNT60Iqv8ebtNU3X");
+		videoPaths
+				.add(5, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+		videoPaths
+				.add(6, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+		videoPaths
+				.add(7, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+		videoPaths
+				.add(8, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+		videoPaths
+				.add(9, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+		
+		for (int i = 0; i < videoPaths.size(); i++) {
+			DealDesc dvi = new DealDesc();
+			dvi.videoPath = videoPaths.get(i);
+			if (i == 0){dvi.thumbPath = R.drawable.v0;}
+			if (i == 1){dvi.thumbPath = R.drawable.v1;}
+			if (i == 2){dvi.thumbPath = R.drawable.v2;}
+			if (i == 3){dvi.thumbPath = R.drawable.v3;}
+			if (i == 4){dvi.thumbPath = R.drawable.v4;}
+			if (i == 5){dvi.thumbPath = R.drawable.v5;}
+			if (i == 6){dvi.thumbPath = R.drawable.v6;}
+			if (i == 7){dvi.thumbPath = R.drawable.v7;}
+			if (i == 8){dvi.thumbPath = R.drawable.v8;}
+			if (i == 9){dvi.thumbPath = R.drawable.v9;}
+			dvi.title = "Video " + i;
+			dvi.desc = "fairly generic and I know there might not be an 100% answer to it. I'm building an ASP .NET web solution that will include a lot of pictures and hopefully a fair amount of traffic."
+					+ " I do really want to achieve performance. OMMENT: Thanks for many good answers. I will go for a file based solution even if I like the idea of having a 100% database driven solution. It "
+					+ "seems that there are today good solutions to do what I want with databases etc but I have a few reasons for not doing it."
+					+ "When I was setting up my first SQL database test table with phpMyAdmin on my website, I was confronted with making choices I "
+					+ "don't remember encountering in the tutorials. One choice in particular about collation stumped me.The default collation in phpMyAdmin"
+					+ " for tables is automatically latin1_swedish_ci, and I accepted it since I didn't have a clue about what might be a better choice (and I "
+					+ "looked collation up at dev.mysql.com, but it didn't help me understand what I should choose). I had hoped I'd see something like English "
+					+ "as an option, but no such luck (or I missed it if it was there).";
+			dealRows.add(dvi);
+		}
+
+		// Log.d("Debug",
+		// "Set the adapter of the ListView object to be a new instance of VideoGalleryAdapter");
+		videoList.setAdapter(new VideoListAdapter(this, dealRows));
+		videoList.setFriction((float) (ViewConfiguration.getScrollFriction() + SCROLL_FRICTION_OFFSET));
+		videoList.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// is being scrolled
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				// has been scrolled
+				new PositionCheck().execute();
+			}
+		});
+	}
 
 	public void clearMP() {
 		Log.d("MainActivity", "ClearMP");
