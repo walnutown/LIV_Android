@@ -105,6 +105,7 @@ public class UserFunctions {
 		int childCount = viewGroup.getChildCount();
 		for (int i = 0; i < childCount; i++) {
 			View view = viewGroup.getChildAt(i);
+			//Log.d("Debug", "View name: " + view.toString());
 			if (view.isFocusable()) {
 				view.setEnabled(enabled);
 			}
@@ -117,7 +118,7 @@ public class UserFunctions {
 					int listChildCount = listView.getChildCount();
 					for (int j = 0; j < listChildCount; j++) {
 						if (view.isFocusable()) {
-							listView.getChildAt(j).setEnabled(false);
+							listView.getChildAt(j).setEnabled(enabled);
 						}
 					}
 				}

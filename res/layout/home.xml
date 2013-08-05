@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="#ffffffff"
     android:orientation="vertical" 
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:id="@+id/home">
 
     <RelativeLayout
         android:layout_width="match_parent"

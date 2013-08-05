@@ -41,6 +41,6 @@ public class WelcomeActivity extends Activity{
 //		//actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffffff")));
 //		actionbar.hide();
 		
-		
 	}
+	
 }

@@ -73,7 +73,7 @@ public class DealView extends LinearLayout {
 		mTextureView.requestFocus();
 
 		mVideoThumb = (ImageView) findViewById(R.id.video_thumb);
-		//mVideoThumb.setVisibility(View.GONE);
+		// mVideoThumb.setVisibility(View.GONE);
 		mTitle = (TextView) findViewById(R.id.title);
 		mDesc = (TextView) findViewById(R.id.desc);
 
@@ -119,8 +119,7 @@ public class DealView extends LinearLayout {
 	public void setThumbnailVisibility(Boolean value) {
 		if (!value) {
 			mVideoThumb.setVisibility(View.GONE);
-		}
-		else{
+		} else {
 			mVideoThumb.setVisibility(View.VISIBLE);
 		}
 	}
@@ -247,16 +246,25 @@ public class DealView extends LinearLayout {
 
 		@Override
 		public void onClick(View v) {
-			if (mMediaPlayer.isPlaying()) {
-				mMediaPlayer.pause();
-				mCurrentState = STATE_PAUSED;
-				mTargetState = STATE_PAUSED;
-				Log.d("mp", "Pause");
-			} else {
-				mMediaPlayer.start();
-				mCurrentState = STATE_PLAYING;
-				mTargetState = STATE_PLAYING;
-				Log.d("mp", "Resume");
+			if (mMediaPlayer == null) {
+				return;
+			}
+			try {
+				if (mMediaPlayer.isPlaying()) {
+					mMediaPlayer.pause();
+					mCurrentState = STATE_PAUSED;
+					mTargetState = STATE_PAUSED;
+					Log.d("mp", "Pause");
+				} else {
+					mMediaPlayer.start();
+					mCurrentState = STATE_PLAYING;
+					mTargetState = STATE_PLAYING;
+					Log.d("mp", "Resume");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				mCurrentState = STATE_ERROR;
+				mTargetState = STATE_ERROR;
 			}
 		}
 	};
@@ -269,14 +277,14 @@ public class DealView extends LinearLayout {
 			Log.d("mp", "mp prepared");
 			// Due to latency of start(), delay the image gone
 			mVideoThumb.postDelayed(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					mVideoThumb.setVisibility(View.GONE);
 					Log.d("Debug", "Thumbnail gone.");
 				}
 			}, 250);
-			//mVideoThumb.setVisibility(View.GONE);
+			// mVideoThumb.setVisibility(View.GONE);
 			mMediaPlayer.start();
 		}
 	};
@@ -295,7 +303,7 @@ public class DealView extends LinearLayout {
 		public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
 			Log.d("Debug", "SurfaceTextureDestroyed");
 			stopPlayBack();
-			//Log.d("mp", "mp released");
+			// Log.d("mp", "mp released");
 			return true;
 		}
 
@@ -305,7 +313,7 @@ public class DealView extends LinearLayout {
 				Log.d("Debug", "SurfaceTextureAvailable");
 				mSurface = new Surface(surface);
 				// mMediaPlayer has been released in the process of scrolling
-				// this satatement must be behind surface assignment
+				// this statement must be behind surface assignment
 				if (mMediaPlayer == null) {
 					return;
 				}

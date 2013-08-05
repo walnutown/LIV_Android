@@ -16,12 +16,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.liv.library.DealDesc;
 import com.example.liv.library.DealView;
@@ -35,7 +40,7 @@ public class HomeActivity extends Activity {
 	private ActionBar ab;
 	private ImageButton btnThumb;
 	private ListView menuList;
-	private ListView videoList;
+	private ListView dealList;
 	private View dealRowFirst;
 	private DealView dvFirst;
 	private View dealRowLast;
@@ -55,15 +60,7 @@ public class HomeActivity extends Activity {
 	private final static int MENU_SLIDE_LENGTH_IN_DP = 100;
 	private final static int SHADOW_LENGTH_IN_DP = 10;
 	private final static int SLIDE_DURATION = 400;
-//	private final static int DOWN_SCROLL_THRESHOLD = 10;
-//	private final static int UP_SCROLL_THRESHOLD = 400;
-//	private final static int ROW_HEIGHT = 936;
-//	private final static int SCROLL_DOWN = 1;
-//	private final static int NO_SCROLL = 2;
-//	private final static int SCROLL_UP = 3;
 	private final static float SCROLL_FRICTION_OFFSET = (float) 0.0;
-//	private int MenuOffset;
-//	private final static int MENU_OFFSET_PERCENT = 10;
 	
 	private TranslateAnimation slideRightHost;
 	private TranslateAnimation slideRightMenu;
@@ -71,24 +68,13 @@ public class HomeActivity extends Activity {
 	private TranslateAnimation slideLeftMenu;
 
 	
-	private ArrayList<MenuDesc> menuItems;
-
+	private ArrayList<MenuDesc> menuItems;	
+	private ArrayList<DealDesc> dealRows = new ArrayList<DealDesc>();
+	private ArrayList<String> videoPaths = new ArrayList<String>();
 	
-	
-	ArrayList<DealDesc> dealRows = new ArrayList<DealDesc>();
-	ArrayList<String> videoPaths = new ArrayList<String>();
-	
-	
-//	private DealView dvLast_prev = null;
-	// private int prevPos = ROW_HEIGHT;
-	// private int currPos = ROW_HEIGHT;
-//	private int prevPos = 0;
-//	private int currPos = 0;
-//	private int scrollDirection;
 
 	private HashMap<Integer, DealView> dvMap = new HashMap<Integer, DealView>();
 
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,12 +90,13 @@ public class HomeActivity extends Activity {
 		clearMP();
 	}
 	
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		new PositionCheck().execute();
-	}
+//	@Override
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		
+//		new PositionCheck().execute();
+//		super.onResume();
+//	}
 
 
 
@@ -137,12 +124,23 @@ public class HomeActivity extends Activity {
 		slidingMenu = inflater.inflate(R.layout.menu, null);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.MATCH_PARENT, 4);
+//		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+//				RelativeLayout.LayoutParams.MATCH_PARENT);
 		params.setMargins(-slideLengthMenu, statusHeight, 0, 0);
 		slidingMenu.setLayoutParams(params);
 
 		// draw menu list
 		menuList = (ListView) slidingMenu.findViewById(R.id.menu_list_view);
 		menuList.setAdapter(new SlidingMenuAdapter(this, menuItems));
+		menuList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				Log.d("Debug", "menuList clicked.");
+				
+			}
+			
+		});
 
 	}
 
@@ -156,21 +154,21 @@ public class HomeActivity extends Activity {
 		LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		dropShadow = inflater.inflate(R.layout.drop_shadow, null);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.MATCH_PARENT, 4);
+				FrameLayout.LayoutParams.MATCH_PARENT, 3);
 		params.setMargins(-shadowLength, statusHeight, 0, 0);
 		dropShadow.setLayoutParams(params);
 	}
 
 	public void slideRight() {
-
 		host.startAnimation(slideRightHost);
-		// top.startAnimation(slideRightHost);
 		drawSlidingMenu();
 		drawDropShadow();
 		root.addView(slidingMenu);
 		root.addView(dropShadow);
 		root.bringChildToFront(host);
+		
 		// disable other views except overlay area
+		UserFunctions.enableViewGroup(host, false);
 		slidingMenu.findViewById(R.id.overlay).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -180,9 +178,29 @@ public class HomeActivity extends Activity {
 				}
 			}
 		});
-		UserFunctions.enableViewGroup(host, false);
+		
 		slidingMenu.startAnimation(slideRightMenu);
 		dropShadow.startAnimation(slideRightHost);
+		slideRightHost.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				root.bringChildToFront(slidingMenu);
+				root.bringChildToFront(dropShadow);
+			}
+		});
 
 		menuShown = true;
 
@@ -240,7 +258,7 @@ public class HomeActivity extends Activity {
 		menuItems = new ArrayList<MenuDesc>();
 		for (int i = 0; i < 5; i++) {
 			MenuDesc md = new MenuDesc();
-			md.label = "menu" + i;
+			md.label = "menu in liv " + i;
 			md.icon = R.drawable.ic_launcher;
 			menuItems.add(md);
 		}
@@ -249,7 +267,7 @@ public class HomeActivity extends Activity {
 	}
 	
 	public void initDealList(){
-		videoList = (ListView) findViewById(R.id.deal_list);
+		dealList = (ListView) findViewById(R.id.deal_list);
 		videoPaths
 				.add(0, "https://v.cdn.vine.co/r/videos/37B926EBC4965748550245969920_17915f6d3d3.3_cHR4.8r6RDQXA_MwZRSvakvKuMdIV1XiHeI4Lq6_spR0SMqDo5zS5vTCuYI7BM7T.mp4?versionId=GofccS921hBgrP.f36TQpZpBJY_JLhgj");
 		videoPaths
@@ -298,9 +316,9 @@ public class HomeActivity extends Activity {
 
 		// Log.d("Debug",
 		// "Set the adapter of the ListView object to be a new instance of VideoGalleryAdapter");
-		videoList.setAdapter(new VideoListAdapter(this, dealRows));
-		videoList.setFriction((float) (ViewConfiguration.getScrollFriction() + SCROLL_FRICTION_OFFSET));
-		videoList.setOnScrollListener(new AbsListView.OnScrollListener() {
+		dealList.setAdapter(new VideoListAdapter(this, dealRows));
+		dealList.setFriction((float) (ViewConfiguration.getScrollFriction() + SCROLL_FRICTION_OFFSET));
+		dealList.setOnScrollListener(new AbsListView.OnScrollListener() {
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -332,15 +350,15 @@ public class HomeActivity extends Activity {
 
 		@Override
 		protected String doInBackground(Context... arg0) {
-			int firstPos = videoList.getFirstVisiblePosition();
-			int lastPos = videoList.getLastVisiblePosition();
+			int firstPos = dealList.getFirstVisiblePosition();
+			int lastPos = dealList.getLastVisiblePosition();
 			if (lastPos == -1) {
 				Log.d("Debug", "invalid lastPos = -1");
 				return null;
 			}
 			Log.d("FirstPosition; LastPosition", "-------" + firstPos + "; " + lastPos + "-------");
 			try {
-				dealRowFirst = videoList.getChildAt(0);
+				dealRowFirst = dealList.getChildAt(0);
 				if (dealRowFirst == null) {
 					Log.d("Debug", "dealRowFirst is null");
 					return null;
@@ -356,7 +374,7 @@ public class HomeActivity extends Activity {
 					dvMap.put(firstPos, dvFirst);
 				} else {
 
-					dealRowLast = videoList.getChildAt(1);
+					dealRowLast = dealList.getChildAt(1);
 					if (dealRowLast == null) {
 						Log.d("Debug", "dealRowLast is null");
 						return null;
