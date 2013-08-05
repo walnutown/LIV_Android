@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
+import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -16,9 +19,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,7 +26,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.example.liv.library.DealDesc;
 import com.example.liv.library.DealView;
@@ -37,7 +36,6 @@ import com.example.liv.library.VideoListAdapter;
 
 public class HomeActivity extends Activity {
 
-	private ActionBar ab;
 	private ImageButton btnThumb;
 	private ListView menuList;
 	private ListView dealList;
@@ -49,56 +47,50 @@ public class HomeActivity extends Activity {
 	private FrameLayout root;
 	private View slidingMenu;
 	private View dropShadow;
-	
+
 	private boolean menuShown;
 	private int slideLengthHost;
 	private int slideLengthMenu;
 	private int shadowLength;
 	private int statusHeight;
-	
+
 	private final static int HOST_SLIDE_LENGTH_IN_DP = 300;
 	private final static int MENU_SLIDE_LENGTH_IN_DP = 100;
 	private final static int SHADOW_LENGTH_IN_DP = 10;
 	private final static int SLIDE_DURATION = 400;
 	private final static float SCROLL_FRICTION_OFFSET = (float) 0.0;
-	
-	private TranslateAnimation slideRightHost;
-	private TranslateAnimation slideRightMenu;
-	private TranslateAnimation slideLeftHost;
-	private TranslateAnimation slideLeftMenu;
 
-	
-	private ArrayList<MenuDesc> menuItems;	
+	private ObjectAnimator slideRightHost;
+	private ObjectAnimator slideRightMenu;
+	private ObjectAnimator slideRightShadow;
+	private ObjectAnimator slideLeftHost;
+	private ObjectAnimator slideLeftMenu;
+	private ObjectAnimator slideLeftShadow;
+
+	private ArrayList<MenuDesc> menuItems;
 	private ArrayList<DealDesc> dealRows = new ArrayList<DealDesc>();
 	private ArrayList<String> videoPaths = new ArrayList<String>();
-	
 
 	private HashMap<Integer, DealView> dvMap = new HashMap<Integer, DealView>();
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home);	
-		init();	
+		setContentView(R.layout.home);
+		init();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
-		//finish();
 		clearMP();
 	}
-	
-//	@Override
-//	protected void onResume() {
-//		// TODO Auto-generated method stub
-//		
-//		new PositionCheck().execute();
-//		super.onResume();
-//	}
 
-
+	@Override
+	protected void onResume() {
+		new PositionCheck().execute();
+		super.onResume();
+	}
 
 	public void toggleSlide() {
 		if (!menuShown) {
@@ -124,8 +116,6 @@ public class HomeActivity extends Activity {
 		slidingMenu = inflater.inflate(R.layout.menu, null);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.MATCH_PARENT, 4);
-//		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-//				RelativeLayout.LayoutParams.MATCH_PARENT);
 		params.setMargins(-slideLengthMenu, statusHeight, 0, 0);
 		slidingMenu.setLayoutParams(params);
 
@@ -137,11 +127,9 @@ public class HomeActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Log.d("Debug", "menuList clicked.");
-				
-			}
-			
-		});
 
+			}
+		});
 	}
 
 	public void drawDropShadow() {
@@ -154,68 +142,102 @@ public class HomeActivity extends Activity {
 		LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		dropShadow = inflater.inflate(R.layout.drop_shadow, null);
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.MATCH_PARENT, 3);
+				FrameLayout.LayoutParams.MATCH_PARENT);
 		params.setMargins(-shadowLength, statusHeight, 0, 0);
 		dropShadow.setLayoutParams(params);
 	}
 
 	public void slideRight() {
-		host.startAnimation(slideRightHost);
 		drawSlidingMenu();
 		drawDropShadow();
 		root.addView(slidingMenu);
 		root.addView(dropShadow);
 		root.bringChildToFront(host);
-		
 		// disable other views except overlay area
 		UserFunctions.enableViewGroup(host, false);
-		slidingMenu.findViewById(R.id.overlay).setOnClickListener(new OnClickListener() {
+		
+		slideRightHost = ObjectAnimator.ofFloat(host, "translationX", 0f, slideLengthHost);
+		slideRightHost.setDuration(SLIDE_DURATION);
+		slideRightHost.start();
+
+		slideRightMenu = ObjectAnimator.ofFloat(slidingMenu, "translationX", 0f, slideLengthMenu);
+		slideRightMenu.setDuration(SLIDE_DURATION);
+		slideRightMenu.start();
+		slideRightMenu.addListener(new AnimatorListener() {
 
 			@Override
-			public void onClick(View v) {
-				if (menuShown) {
-					slideLeft();
-				}
+			public void onAnimationStart(Animator animation) {		
 			}
-		});
-		
-		slidingMenu.startAnimation(slideRightMenu);
-		dropShadow.startAnimation(slideRightHost);
-		slideRightHost.setAnimationListener(new AnimationListener() {
-			
+
 			@Override
-			public void onAnimationStart(Animation animation) {
-				// TODO Auto-generated method stub
-				
+			public void onAnimationRepeat(Animator animation) {
 			}
-			
+
 			@Override
-			public void onAnimationRepeat(Animation animation) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onAnimationEnd(Animation animation) {
+			public void onAnimationEnd(Animator animation) {
 				root.bringChildToFront(slidingMenu);
 				root.bringChildToFront(dropShadow);
+				slidingMenu.findViewById(R.id.overlay).setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (menuShown) {
+							slideLeft();
+						}
+					}
+				});
+			}
+
+			@Override
+			public void onAnimationCancel(Animator animation) {
 			}
 		});
 
-		menuShown = true;
+		slideRightShadow = ObjectAnimator.ofFloat(dropShadow, "translationX", 0f, slideLengthHost);
+		slideRightShadow.setDuration(SLIDE_DURATION);
+		slideRightShadow.start();
 
+		menuShown = true;
 	}
 
 	public void slideLeft() {
 		root.bringChildToFront(host);
-		slidingMenu.startAnimation(slideLeftMenu);
-		dropShadow.startAnimation(slideLeftHost);
+		
+		slideLeftHost = ObjectAnimator.ofFloat(host, "translationX", slideLengthHost, 0f);
+		slideLeftHost.setDuration(SLIDE_DURATION);
+		slideLeftHost.start();
 
-		host.startAnimation(slideLeftHost);
-		slidingMenu.setVisibility(View.GONE);
-		dropShadow.setVisibility(View.GONE);
+		slideLeftMenu = ObjectAnimator.ofFloat(slidingMenu, "translationX", slideLengthMenu, 0f);
+		slideLeftMenu.setDuration(SLIDE_DURATION);
+		slideLeftMenu.start();
+		slideLeftMenu.addListener(new AnimatorListener() {
+			
+			@Override
+			public void onAnimationStart(Animator animation) {
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animator animation) {
+			}
+			
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				slidingMenu.setVisibility(View.GONE);
+				root.removeView(slidingMenu);
+				dropShadow.setVisibility(View.GONE);
+				root.removeView(dropShadow);
+			}
+			
+			@Override
+			public void onAnimationCancel(Animator animation) {
+			}
+		});
+
+		slideLeftShadow = ObjectAnimator.ofFloat(dropShadow, "translationX", slideLengthHost, 0f);
+		slideLeftShadow.setDuration(SLIDE_DURATION);
+		slideLeftShadow.start();
+		
 		UserFunctions.enableViewGroup(root, true);
-
 		menuShown = false;
 	}
 
@@ -229,7 +251,7 @@ public class HomeActivity extends Activity {
 				toggleSlide();
 			}
 		});
-			
+
 		host = (LinearLayout) findViewById(android.R.id.content).getParent();
 		root = (FrameLayout) host.getParent();
 
@@ -239,69 +261,83 @@ public class HomeActivity extends Activity {
 		statusHeight = 0;
 		menuShown = false;
 
-		slideRightHost = new TranslateAnimation(0, slideLengthHost, 0, 0);
-		slideRightHost.setDuration(SLIDE_DURATION);
-		slideRightHost.setFillAfter(true);
-
-		slideRightMenu = new TranslateAnimation(0, slideLengthMenu, 0, 0);
-		slideRightMenu.setDuration(SLIDE_DURATION);
-		slideRightMenu.setFillAfter(true);
-
-		slideLeftHost = new TranslateAnimation(slideLengthHost, 0, 0, 0);
-		slideLeftHost.setDuration(SLIDE_DURATION);
-		slideLeftHost.setFillAfter(true);
-
-		slideLeftMenu = new TranslateAnimation(slideLengthMenu, 0, 0, 0);
-		slideLeftMenu.setDuration(SLIDE_DURATION);
-		slideLeftMenu.setFillAfter(true);
-
 		menuItems = new ArrayList<MenuDesc>();
 		for (int i = 0; i < 5; i++) {
 			MenuDesc md = new MenuDesc();
-			md.label = "menu in liv " + i;
+			md.label = "menu in liv index " + i;
 			md.icon = R.drawable.ic_launcher;
 			menuItems.add(md);
 		}
-		
-		initDealList();	
+
+		initDealList();
 	}
-	
-	public void initDealList(){
+
+	public void initDealList() {
 		dealList = (ListView) findViewById(R.id.deal_list);
 		videoPaths
-				.add(0, "https://v.cdn.vine.co/r/videos/37B926EBC4965748550245969920_17915f6d3d3.3_cHR4.8r6RDQXA_MwZRSvakvKuMdIV1XiHeI4Lq6_spR0SMqDo5zS5vTCuYI7BM7T.mp4?versionId=GofccS921hBgrP.f36TQpZpBJY_JLhgj");
+				.add(0,
+						"https://v.cdn.vine.co/r/videos/37B926EBC4965748550245969920_17915f6d3d3.3_cHR4.8r6RDQXA_MwZRSvakvKuMdIV1XiHeI4Lq6_spR0SMqDo5zS5vTCuYI7BM7T.mp4?versionId=GofccS921hBgrP.f36TQpZpBJY_JLhgj");
 		videoPaths
-				.add(1, "https://v.cdn.vine.co/r/videos/630824DB37966941739384557568_1736066dbf6.3_pyjAJU.RqG7gEUty5Ado_sk6NROgDltxqgYRLgrPD7xKsEk.PUBPKHObWXSPtrQf.mp4?versionId=_lPIR99ivITsJZynfT8EABJAV8aXz551");
+				.add(1,
+						"https://v.cdn.vine.co/r/videos/630824DB37966941739384557568_1736066dbf6.3_pyjAJU.RqG7gEUty5Ado_sk6NROgDltxqgYRLgrPD7xKsEk.PUBPKHObWXSPtrQf.mp4?versionId=_lPIR99ivITsJZynfT8EABJAV8aXz551");
 		videoPaths
-				.add(2, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+				.add(2,
+						"https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
 		videoPaths
-				.add(3, "https://v.cdn.vine.co/r/videos/6D43C68100964692366743240704_1acd90e551a.3_K2q5qaEtoRvg0K9.KX4BPK_rpIUweynZCIEAQPThYXWwW6w1tI5EgwYdqNk_0mDu.mp4?versionId=H6QOz2P2y_61q2axSQSkskdBXhS.GHiE");
+				.add(3,
+						"https://v.cdn.vine.co/r/videos/6D43C68100964692366743240704_1acd90e551a.3_K2q5qaEtoRvg0K9.KX4BPK_rpIUweynZCIEAQPThYXWwW6w1tI5EgwYdqNk_0mDu.mp4?versionId=H6QOz2P2y_61q2axSQSkskdBXhS.GHiE");
 		videoPaths
-				.add(4, "https://v.cdn.vine.co/r/videos/FA01205D-0ABE-4AC9-8812-CFC1D75E544B-6231-0000031EBD2EE420_197450298e5.1.3.mp4?versionId=z7.LcYvqtxmLeLXsUNT60Iqv8ebtNU3X");
+				.add(4,
+						"https://v.cdn.vine.co/r/videos/FA01205D-0ABE-4AC9-8812-CFC1D75E544B-6231-0000031EBD2EE420_197450298e5.1.3.mp4?versionId=z7.LcYvqtxmLeLXsUNT60Iqv8ebtNU3X");
 		videoPaths
-				.add(5, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+				.add(5,
+						"https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
 		videoPaths
-				.add(6, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+				.add(6,
+						"https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
 		videoPaths
-				.add(7, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+				.add(7,
+						"https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
 		videoPaths
-				.add(8, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+				.add(8,
+						"https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
 		videoPaths
-				.add(9, "https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
-		
+				.add(9,
+						"https://v.cdn.vine.co/v/videos/1D0360AA-2502-4E82-9738-D0F700D1ED1D-31315-00000B49D14A1A98_1.1.2.mp4?versionId=tquc9S.CYdHtwoQ_lXmqerCR6n3s_0te");
+
 		for (int i = 0; i < videoPaths.size(); i++) {
 			DealDesc dvi = new DealDesc();
 			dvi.videoPath = videoPaths.get(i);
-			if (i == 0){dvi.thumbPath = R.drawable.v0;}
-			if (i == 1){dvi.thumbPath = R.drawable.v1;}
-			if (i == 2){dvi.thumbPath = R.drawable.v2;}
-			if (i == 3){dvi.thumbPath = R.drawable.v3;}
-			if (i == 4){dvi.thumbPath = R.drawable.v4;}
-			if (i == 5){dvi.thumbPath = R.drawable.v5;}
-			if (i == 6){dvi.thumbPath = R.drawable.v6;}
-			if (i == 7){dvi.thumbPath = R.drawable.v7;}
-			if (i == 8){dvi.thumbPath = R.drawable.v8;}
-			if (i == 9){dvi.thumbPath = R.drawable.v9;}
+			if (i == 0) {
+				dvi.thumbPath = R.drawable.v0;
+			}
+			if (i == 1) {
+				dvi.thumbPath = R.drawable.v1;
+			}
+			if (i == 2) {
+				dvi.thumbPath = R.drawable.v2;
+			}
+			if (i == 3) {
+				dvi.thumbPath = R.drawable.v3;
+			}
+			if (i == 4) {
+				dvi.thumbPath = R.drawable.v4;
+			}
+			if (i == 5) {
+				dvi.thumbPath = R.drawable.v5;
+			}
+			if (i == 6) {
+				dvi.thumbPath = R.drawable.v6;
+			}
+			if (i == 7) {
+				dvi.thumbPath = R.drawable.v7;
+			}
+			if (i == 8) {
+				dvi.thumbPath = R.drawable.v8;
+			}
+			if (i == 9) {
+				dvi.thumbPath = R.drawable.v9;
+			}
 			dvi.title = "Video " + i;
 			dvi.desc = "fairly generic and I know there might not be an 100% answer to it. I'm building an ASP .NET web solution that will include a lot of pictures and hopefully a fair amount of traffic."
 					+ " I do really want to achieve performance. OMMENT: Thanks for many good answers. I will go for a file based solution even if I like the idea of having a 100% database driven solution. It "
@@ -338,7 +374,7 @@ public class HomeActivity extends Activity {
 		for (Map.Entry<Integer, DealView> entry : dvMap.entrySet()) {
 			Integer pos = entry.getKey();
 			DealView dv = entry.getValue();
-			//Log.d("clearMP","index: " + pos );
+			// Log.d("clearMP","index: " + pos );
 			if (dv.isMPCreated()) {
 				dv.stopPlayBack();
 				Log.d("clearMP", "clear " + pos);
@@ -369,7 +405,7 @@ public class HomeActivity extends Activity {
 				if (firstPos == lastPos) {
 					if (!dvFirst.isMPCreated()) {
 						clearMP();
-						dvFirst.start();		
+						dvFirst.start();
 					}
 					dvMap.put(firstPos, dvFirst);
 				} else {
