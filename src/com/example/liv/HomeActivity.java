@@ -7,7 +7,6 @@ import java.util.Map;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
@@ -22,10 +21,12 @@ import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.example.liv.library.DealDesc;
 import com.example.liv.library.DealView;
@@ -47,6 +48,7 @@ public class HomeActivity extends Activity {
 	private FrameLayout root;
 	private View slidingMenu;
 	private View dropShadow;
+	private Spinner spLocation;
 
 	private boolean menuShown;
 	private int slideLengthHost;
@@ -155,7 +157,7 @@ public class HomeActivity extends Activity {
 		root.bringChildToFront(host);
 		// disable other views except overlay area
 		UserFunctions.enableViewGroup(host, false);
-		
+
 		slideRightHost = ObjectAnimator.ofFloat(host, "translationX", 0f, slideLengthHost);
 		slideRightHost.setDuration(SLIDE_DURATION);
 		slideRightHost.start();
@@ -166,7 +168,7 @@ public class HomeActivity extends Activity {
 		slideRightMenu.addListener(new AnimatorListener() {
 
 			@Override
-			public void onAnimationStart(Animator animation) {		
+			public void onAnimationStart(Animator animation) {
 			}
 
 			@Override
@@ -202,7 +204,7 @@ public class HomeActivity extends Activity {
 
 	public void slideLeft() {
 		root.bringChildToFront(host);
-		
+
 		slideLeftHost = ObjectAnimator.ofFloat(host, "translationX", slideLengthHost, 0f);
 		slideLeftHost.setDuration(SLIDE_DURATION);
 		slideLeftHost.start();
@@ -211,15 +213,15 @@ public class HomeActivity extends Activity {
 		slideLeftMenu.setDuration(SLIDE_DURATION);
 		slideLeftMenu.start();
 		slideLeftMenu.addListener(new AnimatorListener() {
-			
+
 			@Override
 			public void onAnimationStart(Animator animation) {
 			}
-			
+
 			@Override
 			public void onAnimationRepeat(Animator animation) {
 			}
-			
+
 			@Override
 			public void onAnimationEnd(Animator animation) {
 				slidingMenu.setVisibility(View.GONE);
@@ -227,7 +229,7 @@ public class HomeActivity extends Activity {
 				dropShadow.setVisibility(View.GONE);
 				root.removeView(dropShadow);
 			}
-			
+
 			@Override
 			public void onAnimationCancel(Animator animation) {
 			}
@@ -236,7 +238,7 @@ public class HomeActivity extends Activity {
 		slideLeftShadow = ObjectAnimator.ofFloat(dropShadow, "translationX", slideLengthHost, 0f);
 		slideLeftShadow.setDuration(SLIDE_DURATION);
 		slideLeftShadow.start();
-		
+
 		UserFunctions.enableViewGroup(root, true);
 		menuShown = false;
 	}
@@ -270,6 +272,18 @@ public class HomeActivity extends Activity {
 		}
 
 		initDealList();
+		initLocationSpinner();
+	}
+
+	public void initLocationSpinner() {
+		spLocation = (Spinner) findViewById(R.id.spLocation);
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter<CharSequence> spLocationAdapter = ArrayAdapter.createFromResource(this, R.array.location_array,
+				R.layout.liv_spinner_item);
+		// Specify the layout to use when the list of choices appears
+		spLocationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		spLocation.setAdapter(spLocationAdapter);
 	}
 
 	public void initDealList() {
@@ -339,14 +353,22 @@ public class HomeActivity extends Activity {
 				dvi.thumbPath = R.drawable.v9;
 			}
 			dvi.title = "Video " + i;
-			dvi.desc = "fairly generic and I know there might not be an 100% answer to it. I'm building an ASP .NET web solution that will include a lot of pictures and hopefully a fair amount of traffic."
-					+ " I do really want to achieve performance. OMMENT: Thanks for many good answers. I will go for a file based solution even if I like the idea of having a 100% database driven solution. It "
-					+ "seems that there are today good solutions to do what I want with databases etc but I have a few reasons for not doing it."
-					+ "When I was setting up my first SQL database test table with phpMyAdmin on my website, I was confronted with making choices I "
-					+ "don't remember encountering in the tutorials. One choice in particular about collation stumped me.The default collation in phpMyAdmin"
-					+ " for tables is automatically latin1_swedish_ci, and I accepted it since I didn't have a clue about what might be a better choice (and I "
-					+ "looked collation up at dev.mysql.com, but it didn't help me understand what I should choose). I had hoped I'd see something like English "
-					+ "as an option, but no such luck (or I missed it if it was there).";
+			// dvi.desc =
+			// "fairly generic and I know there might not be an 100% answer to it. I'm building an ASP .NET web solution that will include a lot of pictures and hopefully a fair amount of traffic."
+			// +
+			// " I do really want to achieve performance. OMMENT: Thanks for many good answers. I will go for a file based solution even if I like the idea of having a 100% database driven solution. It "
+			// +
+			// "seems that there are today good solutions to do what I want with databases etc but I have a few reasons for not doing it."
+			// +
+			// "When I was setting up my first SQL database test table with phpMyAdmin on my website, I was confronted with making choices I "
+			// +
+			// "don't remember encountering in the tutorials. One choice in particular about collation stumped me.The default collation in phpMyAdmin"
+			// +
+			// " for tables is automatically latin1_swedish_ci, and I accepted it since I didn't have a clue about what might be a better choice (and I "
+			// +
+			// "looked collation up at dev.mysql.com, but it didn't help me understand what I should choose). I had hoped I'd see something like English "
+			// +
+			// "as an option, but no such luck (or I missed it if it was there).";
 			dealRows.add(dvi);
 		}
 

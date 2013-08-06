@@ -71,7 +71,7 @@ public class VideoListAdapter extends BaseAdapter {
 		//dv.setThumbnailVisibility(false);
 		dv.setThumbnail(deals.get(position).thumbPath);
 		dv.setTitle(deals.get(position).title);
-		dv.setDesc(deals.get(position).desc);
+		//dv.setDesc(deals.get(position).desc);
 		dv.setVideoURI(Uri.parse(url));
 		
 		dvMap.put(position, dv);

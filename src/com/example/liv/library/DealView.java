@@ -1,8 +1,7 @@
 package com.example.liv.library;
 
-import com.example.liv.R;
-
 import android.content.Context;
+import android.graphics.Paint;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -18,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.liv.R;
+
 /*
  * MyVideoView like the original VideoView, yet based on TextureView 
  * instead of SurfaceView
@@ -31,6 +32,7 @@ public class DealView extends LinearLayout {
 	private TextureView mTextureView;
 	private TextView mTitle;
 	private TextView mDesc;
+	private TextView mOldPrice;
 
 	// all possible internal states
 	private static final int STATE_ERROR = -1;
@@ -75,7 +77,9 @@ public class DealView extends LinearLayout {
 		mVideoThumb = (ImageView) findViewById(R.id.video_thumb);
 		// mVideoThumb.setVisibility(View.GONE);
 		mTitle = (TextView) findViewById(R.id.title);
-		mDesc = (TextView) findViewById(R.id.desc);
+		//mDesc = (TextView) findViewById(R.id.desc);
+		mOldPrice = (TextView) findViewById(R.id.old_price);
+		mOldPrice.setPaintFlags(mOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
 		mCurrentState = STATE_IDLE;
 		mTargetState = STATE_IDLE;
