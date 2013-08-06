@@ -89,7 +89,7 @@
             android:layout_marginTop="30dip" >
 
             <ToggleButton
-                android:id="@+id/btn_male"
+                android:id="@+id/tb_male"
                 style="@style/LivButtonToggle"
                 android:layout_width="130dip"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 android:textSize="23dip" />
 
             <ToggleButton
-                android:id="@+id/btn_female"
+                android:id="@+id/tb_female"
                 style="@style/LivButtonToggle"
                 android:layout_width="130dip"
                 android:layout_height="wrap_content"

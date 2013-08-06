@@ -58,6 +58,7 @@ public class UserFunctions {
 		params.add(new BasicNameValuePair("name", name));
 		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("password", password));
+		//params.add(new BasicNameValuePair("sex", sex));
 		JSONObject json = jsonParser.getJSONFromUrl(registerURL, params);
 		return json;	
 	}

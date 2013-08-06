@@ -33,7 +33,7 @@ import com.example.liv.library.DealView;
 import com.example.liv.library.MenuDesc;
 import com.example.liv.library.SlidingMenuAdapter;
 import com.example.liv.library.UserFunctions;
-import com.example.liv.library.VideoListAdapter;
+import com.example.liv.library.DealListAdapter;
 
 public class HomeActivity extends Activity {
 
@@ -374,7 +374,7 @@ public class HomeActivity extends Activity {
 
 		// Log.d("Debug",
 		// "Set the adapter of the ListView object to be a new instance of VideoGalleryAdapter");
-		dealList.setAdapter(new VideoListAdapter(this, dealRows));
+		dealList.setAdapter(new DealListAdapter(this, dealRows));
 		dealList.setFriction((float) (ViewConfiguration.getScrollFriction() + SCROLL_FRICTION_OFFSET));
 		dealList.setOnScrollListener(new AbsListView.OnScrollListener() {
 

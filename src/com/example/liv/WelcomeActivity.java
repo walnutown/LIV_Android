@@ -28,7 +28,7 @@ public class WelcomeActivity extends Activity{
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent toLoginAct = new Intent(getApplicationContext(), LoginActivity_new.class);
+				Intent toLoginAct = new Intent(getApplicationContext(), LoginActivity.class);
 				startActivity(toLoginAct);
 				
 			}

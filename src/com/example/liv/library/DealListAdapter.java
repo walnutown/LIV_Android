@@ -14,14 +14,14 @@ import android.widget.BaseAdapter;
 
 import com.example.liv.R;
 
-public class VideoListAdapter extends BaseAdapter {
+public class DealListAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<DealDesc> deals;
 	LayoutInflater inflater;
 	private HashMap<Integer, DealView> dvMap = new HashMap<Integer, DealView>();
 	private int currPos;
 
-	public VideoListAdapter(Context _context, ArrayList<DealDesc> _items) {
+	public DealListAdapter(Context _context, ArrayList<DealDesc> _items) {
 		context = _context;
 		deals = _items;
 		inflater = LayoutInflater.from(_context);

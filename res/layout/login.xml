@@ -1,115 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:fillViewport="true">
+    android:layout_height="match_parent" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-		android:background="#ffffff">
-		
-        <!--  Header Starts-->
-        <LinearLayout
-            android:id="@+id/header"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffffff"
+        android:orientation="vertical" >
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@layout/header_gradient"
-            android:paddingTop="5dip"
-            android:paddingBottom="5dip">
-            <!-- Logo Start -->
+            android:layout_marginTop="90dip"
+            android:scaleType="center"
+            android:scaleY="1.3"
+            android:src="@drawable/liv_logo" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@+id/logo"
-                android:text="@string/logo"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:gravity="center" />
-
-            <!-- Logo Ends -->
-        </LinearLayout> 
-        <!--  Header Ends -->
- 
-        <!-- Footer Start -->
-             <!-- Place footer next to header to set z-index property to minus value -->
-
-             <LinearLayout
-                 android:id="@+id/footer"
-                 android:layout_width="match_parent"
-                 android:layout_height="45dip"
-                 android:layout_alignParentBottom="true"
-                 android:background="@layout/footer_repeat" >
-
-             </LinearLayout>            
-        <!-- Footer Ends -->
- 
-        <!-- Login Form -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/txt_logo_label"
+            android:layout_width="280dip"
             android:layout_height="wrap_content"
-            android:padding="10dip"
-            android:layout_below="@id/header">
-            <!-- Email label -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="@string/email"/>
-            <!-- singleLine: Constrains the text to a single horizontally scrolling line instead of letting it wrap onto multiple lines, 
-            and advances focus instead of inserting a newline when you press the enter key.  -->
-            <EditText
-                android:id="@+id/inputEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dip"
-                android:layout_marginTop="5dip"
-                android:inputType="textEmailAddress"
-                android:singleLine="true" />
-            <!-- Password Label -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="@string/password"/>
-            <EditText
-                android:id="@+id/inputPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               	android:layout_marginBottom="20dip"
-                android:layout_marginTop="5dip"
-                android:inputType="textPassword"
-                android:singleLine="true"/>
-            <!-- Login Button -->
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dip"
+            android:gravity="center_horizontal"
+            android:text="Start LIVing"
+            android:textColor="#818181"
+            android:textSize="23dip"
+            android:typeface="sans" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dip" >
+
             <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent" 
+                android:id="@+id/btn_fb"
+                style="@style/LivButtonBlue"
+                android:layout_width="280dip"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:text="@string/login"/>
-            <!-- Link to Registration Screen -->
-            <TextView
-                android:id="@+id/link_to_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dip"
-                android:layout_marginBottom="40dip"
-                android:text="@string/register_hint"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="#0b84aa"/>
-            <!-- Error Message -->
-            <TextView
-                android:id="@+id/login_error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"/>
-        </LinearLayout>
-        
-        <!-- Login Form Ends -->
-        
-	</RelativeLayout>
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="40dp"
+                android:paddingRight="-10dp"
+                android:text="Login with Facebook"
+                android:textSize="23dip" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:scaleX="0.9"
+                android:scaleY="1"
+                android:src="@drawable/fb_thumb" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txt_or"
+            android:layout_width="280dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dip"
+            android:gravity="center_horizontal"
+            android:text="or"
+            android:textColor="#818181"
+            android:textSize="20dip" />
+
+        <Button
+            android:id="@+id/btn_sign"
+            style="@style/LivButton"
+            android:layout_width="280dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dip"
+            android:text="Sign In/Sign Up"
+            android:textSize="23dip" />
+
+        <Button
+            android:id="@+id/btn_skip"
+            style="@style/LivButtonSkip"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dip"
+            android:text="Skip"
+            android:textSize="15dip" />
+    </LinearLayout>
+
 </ScrollView>
